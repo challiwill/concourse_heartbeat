@@ -1,17 +1,16 @@
 resources:
   - name: concourse_heartbeat
     type: git
+    source: git@github.com:challiwill/concourse_heartbeat.git
+    branch: master
+    private_key: {{concourse_heartbeat-github-private-key}}
+  - name: concourse_heartbeat-rc
+    type: cf
     source: 
-
 jobs:
-  - name: heartbeat
+  - name: unit
     plan:
-      - task: deploy-staging
-        config:
-          platform: linux
-          image: "docker:///busybox"
-          run:
-            path: echo
-            args: ["Hello, world!"]
-      - task: deploy-prod
-  
+      - get: concourse_heatbeat
+        trigger: true
+      - task: unit
+        file: 

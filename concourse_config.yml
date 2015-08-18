@@ -1,0 +1,17 @@
+resources:
+  - name: concourse_heartbeat
+    type: git
+    source: 
+
+jobs:
+  - name: heartbeat
+    plan:
+      - task: deploy-staging
+        config:
+          platform: linux
+          image: "docker:///busybox"
+          run:
+            path: echo
+            args: ["Hello, world!"]
+      - task: deploy-prod
+  
